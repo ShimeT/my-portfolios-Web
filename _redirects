@@ -1,0 +1,8 @@
+# Netlify Redirects File
+# Handles routing for single-page application
+
+# API routes to serverless functions
+/api/*  /.netlify/functions/:splat  200
+
+# All other routes to index.html (SPA)
+/*  /index.html  200

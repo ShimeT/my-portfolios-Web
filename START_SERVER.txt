@@ -1,0 +1,273 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🚀 START YOUR SERVER - QUICK GUIDE 🚀                     ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+✅ SERVER & DATABASE SETUP COMPLETE!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 PREREQUISITES
+═══════════════════════════════════════════════════════════════════════════════
+
+Before starting, make sure you have:
+   ✅ Node.js installed (v14 or higher)
+   ✅ npm installed (comes with Node.js)
+
+Check if installed:
+   node --version
+   npm --version
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 QUICK START (3 STEPS)
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: INSTALL DEPENDENCIES
+   Open terminal in project folder and run:
+   
+   npm install
+   
+   This will install:
+   • Express (web server)
+   • SQLite3 (database)
+   • JWT (authentication)
+   • bcryptjs (password hashing)
+   • And more...
+
+STEP 2: INITIALIZE DATABASE
+   Run this command:
+   
+   npm run init-db
+   
+   This will:
+   • Create database folder
+   • Create portfolio.db file
+   • Create all tables
+   • Insert default admin user
+   • Insert default profile data
+
+STEP 3: START SERVER
+   Run this command:
+   
+   npm start
+   
+   You'll see:
+   ╔══════════════════════════════════════════════════════════════╗
+   ║          Portfolio Website Server Started! 🚀               ║
+   ╚══════════════════════════════════════════════════════════════╝
+   
+   🌐 Server running at: http://localhost:3000
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🌐 OPEN YOUR WEBSITE
+═══════════════════════════════════════════════════════════════════════════════
+
+Open your browser and go to:
+   
+   http://localhost:3000
+   
+   OR
+   
+   http://127.0.0.1:3000
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔐 LOGIN AS ADMIN
+═══════════════════════════════════════════════════════════════════════════════
+
+Default credentials:
+   Username: admin
+   Password: admin123
+
+The server now handles authentication with JWT tokens!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📡 WHAT'S RUNNING?
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Express Server (Port 3000)
+✅ SQLite Database (database/portfolio.db)
+✅ RESTful API Endpoints
+✅ JWT Authentication
+✅ CORS Enabled
+✅ Static File Serving
+
+API Endpoints Available:
+   POST   /api/auth/login          - Login
+   GET    /api/auth/verify         - Verify token
+   GET    /api/projects            - Get projects
+   POST   /api/projects            - Create project (protected)
+   GET    /api/experiences         - Get experiences
+   POST   /api/experiences         - Create experience (protected)
+   GET    /api/courses             - Get courses
+   POST   /api/courses             - Create course (protected)
+   GET    /api/profile             - Get profile
+   PUT    /api/profile             - Update profile (protected)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+💾 DATABASE STRUCTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+Your database has 5 tables:
+
+1. USERS
+   • Stores admin credentials
+   • Passwords are hashed with bcrypt
+
+2. PROJECTS
+   • All your portfolio projects
+   • Technologies and features stored as JSON
+
+3. EXPERIENCES
+   • Work history
+   • Responsibilities and skills as JSON
+
+4. COURSES
+   • BSc and MSc courses
+   • Separated by degree type
+
+5. PROFILE
+   • Your personal information
+   • Contact details and social links
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🛠️ DEVELOPMENT MODE
+═══════════════════════════════════════════════════════════════════════════════
+
+For development with auto-reload:
+   
+   npm run dev
+   
+   This uses nodemon to restart server on file changes.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔄 RESET DATABASE
+═══════════════════════════════════════════════════════════════════════════════
+
+If you need to reset everything:
+
+Windows:
+   del database\portfolio.db
+   npm run init-db
+
+Mac/Linux:
+   rm database/portfolio.db
+   npm run init-db
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 CHECK SERVER HEALTH
+═══════════════════════════════════════════════════════════════════════════════
+
+Test if server is running:
+   
+   http://localhost:3000/api/health
+   
+   Should return:
+   {
+     "status": "OK",
+     "message": "Portfolio server is running",
+     "timestamp": "2024-..."
+   }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+⚙️ CONFIGURATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Edit .env file to change:
+   • PORT (default: 3000)
+   • JWT_SECRET (change in production!)
+   • ADMIN_USERNAME (default: admin)
+   • ADMIN_PASSWORD (default: admin123)
+   • Database location
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+PORT ALREADY IN USE:
+   Error: listen EADDRINUSE :::3000
+   
+   Solution: Change PORT in .env file
+   PORT=3001
+
+MODULE NOT FOUND:
+   Error: Cannot find module 'express'
+   
+   Solution: Install dependencies
+   npm install
+
+DATABASE LOCKED:
+   Error: SQLITE_BUSY: database is locked
+   
+   Solution: Close all connections and restart
+   Close server (Ctrl+C)
+   npm start
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 TESTING THE API
+═══════════════════════════════════════════════════════════════════════════════
+
+Test login:
+   POST http://localhost:3000/api/auth/login
+   Body: {"username":"admin","password":"admin123"}
+
+Test get projects:
+   GET http://localhost:3000/api/projects
+
+Test get profile:
+   GET http://localhost:3000/api/profile
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+For detailed information:
+   → Read SERVER_SETUP.md
+
+For API documentation:
+   → Check server/routes/ folder
+
+For database schema:
+   → See init-database.js
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🎉 YOU'RE ALL SET!
+═══════════════════════════════════════════════════════════════════════════════
+
+Your portfolio now has:
+   ✅ Professional backend server
+   ✅ SQLite database
+   ✅ RESTful API
+   ✅ JWT authentication
+   ✅ Secure password hashing
+   ✅ CRUD operations
+   ✅ Multi-language support
+   ✅ Admin panel integration
+
+Next steps:
+   1. npm install
+   2. npm run init-db
+   3. npm start
+   4. Open http://localhost:3000
+   5. Login and manage your content!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+                    🚀 Ready to launch your server! 🚀
+
+═══════════════════════════════════════════════════════════════════════════════

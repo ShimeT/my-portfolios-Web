@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shimelis Tesfaye - Computer Science and Data Science Professional">
+    <title>Shimelis Tesfaye | Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">ST</div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="theme-toggle-nav" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Admin Login Button -->
+            <button id="admin-login-btn" class="admin-btn" aria-label="Admin Login">
+                <i class="fas fa-user-shield"></i>
+            </button>
+
+            <!-- Admin Panel Button (shown when logged in) -->
+            <button id="admin-panel-btn" class="admin-panel-btn" style="display: none;" aria-label="Admin Panel">
+                <i class="fas fa-cog"></i>
+            </button>
+
+            <!-- Language Dropdown -->
+            <div class="language-dropdown">
+                <button class="language-toggle" id="language-toggle" aria-label="Select Language">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-lang">EN</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="language-menu" id="language-menu">
+                    <button class="lang-option active" data-lang="en" data-label="EN">
+                        <span class="lang-flag">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                    </button>
+                    <button class="lang-option" data-lang="am" data-label="አማ">
+                        <span class="lang-flag">🇪🇹</span>
+                        <span class="lang-name">አማርኛ</span>
+                    </button>
+                    <button class="lang-option" data-lang="om" data-label="OM">
+                        <span class="lang-flag">🇪🇹</span>
+                        <span class="lang-name">Afan Oromo</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Hi, I'm <span class="highlight">Shimelis Tesfaye</span></h1>
+                    <p class="hero-subtitle">Computer Science & Data Science Professional</p>
+                    <p class="hero-description">
+                        Passionate about leveraging data-driven insights and cutting-edge technology 
+                        to solve complex problems and drive innovation.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                        <a href="#" class="btn btn-secondary" id="download-cv">
+                            <i class="fas fa-download"></i> Download CV
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/profile-photo.jpg" alt="Shimelis Tesfaye" class="profile-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I am a dedicated professional with a strong foundation in Computer Science 
+                        and advanced expertise in Data Science. My journey in technology has been 
+                        driven by curiosity and a passion for continuous learning.
+                    </p>
+                    <p>
+                        With a BSc in Computer Science and an MSc in Data Science, I combine 
+                        theoretical knowledge with practical skills to deliver innovative solutions. 
+                        I specialize in machine learning, data analysis, software development, and 
+                        creating scalable systems that make a real-world impact.
+                    </p>
+                </div>
+                
+                <!-- Education Timeline -->
+                <div class="education-section">
+                    <h3 class="subsection-title">Education</h3>
+                    
+                    <!-- MSc in Data Science -->
+                    <div class="education-card">
+                        <div class="education-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h4>Master of Science in Data Science</h4>
+                                <p class="education-meta">MSc | Data Science</p>
+                            </div>
+                        </div>
+                        <div class="courses-section">
+                            <div class="courses-header">
+                                <h5>Courses Taken:</h5>
+                                <button class="btn-small admin-only" onclick="openCourseModal('msc')">
+                                    <i class="fas fa-plus"></i> Add Course
+                                </button>
+                            </div>
+                            <ul class="courses-list" id="msc-courses">
+                                <li class="course-item">
+                                    <span>Machine Learning</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('msc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Deep Learning</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('msc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Statistical Analysis</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('msc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Big Data Analytics</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('msc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- BSc in Computer Science -->
+                    <div class="education-card">
+                        <div class="education-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h4>Bachelor of Science in Computer Science</h4>
+                                <p class="education-meta">BSc | Computer Science</p>
+                            </div>
+                        </div>
+                        <div class="courses-section">
+                            <div class="courses-header">
+                                <h5>Courses Taken:</h5>
+                                <button class="btn-small admin-only" onclick="openCourseModal('bsc')">
+                                    <i class="fas fa-plus"></i> Add Course
+                                </button>
+                            </div>
+                            <ul class="courses-list" id="bsc-courses">
+                                <li class="course-item">
+                                    <span>Data Structures & Algorithms</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('bsc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Database Management Systems</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('bsc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Operating Systems</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('bsc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Software Engineering</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('bsc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="course-item">
+                                    <span>Computer Networks</span>
+                                    <div class="course-actions">
+                                        <button onclick="editCourse('bsc', this)" class="btn-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCourse(this)" class="btn-icon">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience-timeline">
+                
+                <div class="experience-item">
+                    <div class="experience-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="experience-content">
+                        <div class="experience-date">2022 - Present</div>
+                        <h3>Senior Data Scientist</h3>
+                        <h4>Tech Solutions Inc.</h4>
+                        <p class="experience-description">
+                            Leading data science initiatives and developing machine learning models 
+                            to drive business insights and automation.
+                        </p>
+                        <ul class="responsibilities">
+                            <li>Developed predictive models improving forecast accuracy by 35%</li>
+                            <li>Led a team of 5 data analysts in building ETL pipelines</li>
+                            <li>Implemented real-time analytics dashboards using Python and Tableau</li>
+                        </ul>
+                        <div class="skills-used">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="experience-content">
+                        <div class="experience-date">2020 - 2022</div>
+                        <h3>Data Analyst</h3>
+                        <h4>Digital Innovations Ltd.</h4>
+                        <p class="experience-description">
+                            Analyzed complex datasets and created actionable insights for stakeholders.
+                        </p>
+                        <ul class="responsibilities">
+                            <li>Performed statistical analysis on customer behavior data</li>
+                            <li>Created automated reporting systems reducing manual work by 60%</li>
+                            <li>Collaborated with cross-functional teams on data-driven projects</li>
+                        </ul>
+                        <div class="skills-used">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">R</span>
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="experience-content">
+                        <div class="experience-date">2018 - 2020</div>
+                        <h3>Software Developer</h3>
+                        <h4>CodeCraft Solutions</h4>
+                        <p class="experience-description">
+                            Developed full-stack web applications and maintained existing systems.
+                        </p>
+                        <ul class="responsibilities">
+                            <li>Built responsive web applications using modern frameworks</li>
+                            <li>Optimized database queries improving performance by 40%</li>
+                            <li>Participated in agile development and code reviews</li>
+                        </ul>
+                        <div class="skills-used">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Portfolio</h2>
+            <p class="section-subtitle">Check out some of my recent projects</p>
+            
+            <div class="portfolio-grid">
+                
+                <div class="portfolio-card" onclick="openProjectModal(0)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Customer Churn Prediction</h3>
+                        <p>Machine learning model to predict customer churn</p>
+                        <div class="portfolio-tags">
+                            <span>Python</span>
+                            <span>Scikit-learn</span>
+                            <span>Pandas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="openProjectModal(1)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Image Classification System</h3>
+                        <p>Deep learning model for image recognition</p>
+                        <div class="portfolio-tags">
+                            <span>TensorFlow</span>
+                            <span>Keras</span>
+                            <span>CNN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="openProjectModal(2)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Sentiment Analysis Tool</h3>
+                        <p>NLP-based sentiment analysis application</p>
+                        <div class="portfolio-tags">
+                            <span>Python</span>
+                            <span>NLTK</span>
+                            <span>Flask</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="openProjectModal(3)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Data Visualization Dashboard</h3>
+                        <p>Interactive dashboard for business analytics</p>
+                        <div class="portfolio-tags">
+                            <span>React</span>
+                            <span>D3.js</span>
+                            <span>Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="openProjectModal(4)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Recommendation Engine</h3>
+                        <p>Collaborative filtering recommendation system</p>
+                        <div class="portfolio-tags">
+                            <span>Python</span>
+                            <span>Surprise</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="openProjectModal(5)">
+                    <div class="portfolio-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>E-Commerce Platform</h3>
+                        <p>Full-stack e-commerce web application</p>
+                        <div class="portfolio-tags">
+                            <span>React</span>
+                            <span>Express</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Feel free to reach out for collaborations or just a friendly chat</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:shimelis.tesfaye@example.com">shimelis.tesfaye@example.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+1234567890">+1 (234) 567-890</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>City, Country</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        <span class="error-message" id="name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        <span class="error-message" id="email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                        <span class="error-message" id="subject-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        <span class="error-message" id="message-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div class="form-success" id="form-success">
+                        <i class="fas fa-check-circle"></i> Message sent successfully!
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Shimelis Tesfaye. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Course Modal -->
+    <div class="modal" id="course-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeCourseModal()">&times;</span>
+            <h3 id="course-modal-title">Add Course</h3>
+            <form id="course-form">
+                <input type="text" id="course-name" placeholder="Course Name" required>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCourseModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="modal" id="project-modal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" onclick="closeProjectModal()">&times;</span>
+            <div id="project-details"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+            <h3><i class="fas fa-lock"></i> Admin Login</h3>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <div class="error-message" id="login-error"></div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <p class="login-hint">Default: admin / admin123</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="admin-modal">
+        <div class="modal-content modal-xlarge">
+            <div class="admin-header">
+                <h3><i class="fas fa-cog"></i> Admin Panel</h3>
+                <div class="admin-actions">
+                    <button onclick="logoutAdmin()" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                    <span class="modal-close" onclick="closeAdminModal()">&times;</span>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('projects')">
+                    <i class="fas fa-folder"></i> Projects
+                </button>
+                <button class="admin-tab" onclick="switchAdminTab('experience')">
+                    <i class="fas fa-briefcase"></i> Work Experience
+                </button>
+                <button class="admin-tab" onclick="switchAdminTab('courses')">
+                    <i class="fas fa-graduation-cap"></i> Courses
+                </button>
+                <button class="admin-tab" onclick="switchAdminTab('profile')">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+            </div>
+
+            <!-- Projects Management -->
+            <div id="admin-projects" class="admin-section active">
+                <div class="admin-section-header">
+                    <h4>Manage Projects</h4>
+                    <button class="btn btn-primary" onclick="openProjectForm()">
+                        <i class="fas fa-plus"></i> Add Project
+                    </button>
+                </div>
+                <div id="projects-list" class="admin-list"></div>
+            </div>
+
+            <!-- Experience Management -->
+            <div id="admin-experience" class="admin-section">
+                <div class="admin-section-header">
+                    <h4>Manage Work Experience</h4>
+                    <button class="btn btn-primary" onclick="openExperienceForm()">
+                        <i class="fas fa-plus"></i> Add Experience
+                    </button>
+                </div>
+                <div id="experience-list" class="admin-list"></div>
+            </div>
+
+            <!-- Courses Management -->
+            <div id="admin-courses" class="admin-section">
+                <div class="admin-section-header">
+                    <h4>Manage Courses</h4>
+                    <div class="course-degree-tabs">
+                        <button class="degree-tab active" onclick="switchDegreeTab('bsc')">BSc Courses</button>
+                        <button class="degree-tab" onclick="switchDegreeTab('msc')">MSc Courses</button>
+                    </div>
+                </div>
+                <div id="bsc-admin-courses" class="degree-courses active">
+                    <button class="btn btn-primary" onclick="openCourseFormAdmin('bsc')">
+                        <i class="fas fa-plus"></i> Add BSc Course
+                    </button>
+                    <div id="bsc-courses-admin-list" class="admin-list"></div>
+                </div>
+                <div id="msc-admin-courses" class="degree-courses">
+                    <button class="btn btn-primary" onclick="openCourseFormAdmin('msc')">
+                        <i class="fas fa-plus"></i> Add MSc Course
+                    </button>
+                    <div id="msc-courses-admin-list" class="admin-list"></div>
+                </div>
+            </div>
+
+            <!-- Profile Management -->
+            <div id="admin-profile" class="admin-section">
+                <div class="admin-section-header">
+                    <h4>Manage Profile Information</h4>
+                </div>
+                
+                <!-- Change Password Section -->
+                <div class="password-change-container">
+                    <h5><i class="fas fa-lock"></i> Change Password</h5>
+                    <form id="password-change-form">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="new-password" minlength="6" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirm-password" minlength="6" required>
+                        </div>
+                        <div class="error-message" id="password-error"></div>
+                        <div class="success-message" id="password-success"></div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Profile Information Section -->
+                <div class="profile-form-container">
+                    <h5><i class="fas fa-user"></i> Personal Information</h5>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profile-name" value="Shimelis Tesfaye" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Professional Title</label>
+                            <input type="text" id="profile-title" value="Computer Science & Data Science Professional" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bio / Introduction</label>
+                            <textarea id="profile-bio" rows="4" required>Passionate about leveraging data-driven insights and cutting-edge technology to solve complex problems and drive innovation.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profile-email" value="shimelis.tesfaye@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="profile-phone" value="+1 (234) 567-890" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="profile-location" value="City, Country" required>
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn URL</label>
+                            <input type="url" id="profile-linkedin" value="https://linkedin.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub URL</label>
+                            <input type="url" id="profile-github" value="https://github.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter URL</label>
+                            <input type="url" id="profile-twitter" value="https://twitter.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Form Modal -->
+    <div class="modal" id="project-form-modal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" onclick="closeProjectForm()">&times;</span>
+            <h3 id="project-form-title">Add Project</h3>
+            <form id="project-form">
+                <div class="form-group">
+                    <label>Project Title</label>
+                    <input type="text" id="project-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="project-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Technologies (comma-separated)</label>
+                    <input type="text" id="project-technologies" placeholder="React, Node.js, MongoDB" required>
+                </div>
+                <div class="form-group">
+                    <label>Features (one per line)</label>
+                    <textarea id="project-features" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>GitHub URL</label>
+                    <input type="url" id="project-github" required>
+                </div>
+                <div class="form-group">
+                    <label>Demo URL</label>
+                    <input type="url" id="project-demo" required>
+                </div>
+                <div class="form-group">
+                    <label>Icon (Font Awesome class)</label>
+                    <input type="text" id="project-icon" placeholder="fas fa-code" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save Project</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeProjectForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Experience Form Modal -->
+    <div class="modal" id="experience-form-modal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" onclick="closeExperienceForm()">&times;</span>
+            <h3 id="experience-form-title">Add Work Experience</h3>
+            <form id="experience-form">
+                <div class="form-group">
+                    <label>Job Title</label>
+                    <input type="text" id="exp-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" id="exp-company" required>
+                </div>
+                <div class="form-group">
+                    <label>Date Range</label>
+                    <input type="text" id="exp-date" placeholder="2020 - 2022" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="exp-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Responsibilities (one per line)</label>
+                    <textarea id="exp-responsibilities" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Skills (comma-separated)</label>
+                    <input type="text" id="exp-skills" placeholder="Python, TensorFlow, SQL" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save Experience</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeExperienceForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Course Form Modal (Admin) -->
+    <div class="modal" id="course-form-admin-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeCourseFormAdmin()">&times;</span>
+            <h3 id="course-form-admin-title">Add Course</h3>
+            <form id="course-form-admin">
+                <div class="form-group">
+                    <label>Course Name</label>
+                    <input type="text" id="course-name-admin" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCourseFormAdmin()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/translations.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/language.js"></script>
+</body>
+</html>
