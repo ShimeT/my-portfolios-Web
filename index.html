@@ -24,6 +24,7 @@
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#resources" class="nav-link">Resources</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
@@ -33,8 +34,14 @@
                 <i class="fas fa-moon"></i>
             </button>
 
-            <!-- Admin Login Button -->
-            <button id="admin-login-btn" class="admin-btn" aria-label="Admin Login">
+            <!-- User Register Button -->
+            <button id="user-register-btn" class="user-register-btn" aria-label="Register">
+                <i class="fas fa-user-plus"></i>
+                <span>Register</span>
+            </button>
+
+            <!-- Admin Login Button (Hidden by default) -->
+            <button id="admin-login-btn" class="admin-btn" style="display: none;" aria-label="Admin Login"></button>
                 <i class="fas fa-user-shield"></i>
             </button>
 
@@ -353,6 +360,22 @@
         </div>
     </section>
 
+    <!-- Resources Section -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Course Resources</h2>
+            <p class="section-subtitle">Download educational materials and course content</p>
+            
+            <div class="resources-grid" id="resources-grid">
+                <!-- Resources will be loaded here dynamically -->
+                <div class="loading-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading resources...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio-section">
         <div class="container">
@@ -582,9 +605,24 @@
             <div class="admin-header">
                 <h3><i class="fas fa-cog"></i> Admin Panel</h3>
                 <div class="admin-actions">
-                    <button onclick="logoutAdmin()" class="btn btn-secondary">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                    <!-- Settings Dropdown -->
+                    <div class="admin-settings-dropdown">
+                        <button class="admin-settings-toggle" id="admin-settings-toggle" onclick="toggleAdminSettings()">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="admin-settings-menu" id="admin-settings-menu">
+                            <button class="admin-settings-option" onclick="switchAdminTab('profile')">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </button>
+                            <button class="admin-settings-option" onclick="logoutAdmin()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
                     <span class="modal-close" onclick="closeAdminModal()">&times;</span>
                 </div>
             </div>
@@ -599,8 +637,11 @@
                 <button class="admin-tab" onclick="switchAdminTab('courses')">
                     <i class="fas fa-graduation-cap"></i> Courses
                 </button>
-                <button class="admin-tab" onclick="switchAdminTab('profile')">
-                    <i class="fas fa-user"></i> Profile
+                <button class="admin-tab" onclick="switchAdminTab('resources')">
+                    <i class="fas fa-book"></i> Resources
+                </button>
+                <button class="admin-tab" onclick="switchAdminTab('users')">
+                    <i class="fas fa-users"></i> Users
                 </button>
             </div>
 
@@ -652,7 +693,7 @@
             <!-- Profile Management -->
             <div id="admin-profile" class="admin-section">
                 <div class="admin-section-header">
-                    <h4>Manage Profile Information</h4>
+                    <h4><i class="fas fa-user"></i> Profile Settings</h4>
                 </div>
                 
                 <!-- Change Password Section -->
@@ -724,6 +765,46 @@
                         </button>
                     </form>
                 </div>
+            </div>
+
+            <!-- Resources Management -->
+            <div id="admin-resources" class="admin-section">
+                <div class="admin-section-header">
+                    <h4>Manage Course Resources</h4>
+                </div>
+                <div class="resource-upload-container">
+                    <h5><i class="fas fa-upload"></i> Upload New Resource</h5>
+                    <form id="resource-upload-form">
+                        <div class="form-group">
+                            <label>Resource Title</label>
+                            <input type="text" id="resource-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="resource-description" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" id="resource-category" placeholder="e.g., Computer Science, Data Science" required>
+                        </div>
+                        <div class="form-group">
+                            <label>File (Max 50MB)</label>
+                            <input type="file" id="resource-file" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Upload Resource
+                        </button>
+                    </form>
+                </div>
+                <div id="resources-admin-list" class="admin-list"></div>
+            </div>
+
+            <!-- Users Management -->
+            <div id="admin-users" class="admin-section">
+                <div class="admin-section-header">
+                    <h4>Registered Users</h4>
+                </div>
+                <div id="users-admin-list" class="admin-list"></div>
             </div>
         </div>
     </div>
@@ -826,10 +907,35 @@
         </div>
     </div>
 
+    <!-- Registration Modal -->
+    <div class="modal" id="registration-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeRegistrationModal()">&times;</span>
+            <h3><i class="fas fa-user-plus"></i> Register to Download</h3>
+            <p class="modal-subtitle">Create a free account to access course resources</p>
+            <form id="registration-form">
+                <div class="form-group">
+                    <input type="text" id="reg-name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="reg-email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="reg-password" placeholder="Password (min 6 characters)" minlength="6" required>
+                </div>
+                <div class="error-message" id="registration-error"></div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-check"></i> Register & Download
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Custom JavaScript -->
     <script src="js/translations.js"></script>
     <script src="js/script.js"></script>
     <script src="js/admin.js"></script>
     <script src="js/language.js"></script>
+    <script src="js/resources.js"></script>
 </body>
 </html>

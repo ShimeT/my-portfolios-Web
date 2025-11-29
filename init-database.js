@@ -126,6 +126,54 @@ function createTables() {
             `, (err) => {
                 if (err) console.error('Error creating profile table:', err);
                 else console.log('✓ Profile table created');
+            });
+
+            // Registered users table
+            db.run(`
+                CREATE TABLE IF NOT EXISTS registered_users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            `, (err) => {
+                if (err) console.error('Error creating registered_users table:', err);
+                else console.log('✓ Registered users table created');
+            });
+
+            // Course resources table
+            db.run(`
+                CREATE TABLE IF NOT EXISTS course_resources (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    file_name TEXT NOT NULL,
+                    file_path TEXT NOT NULL,
+                    file_type TEXT NOT NULL,
+                    file_size INTEGER NOT NULL,
+                    category TEXT DEFAULT 'General',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            `, (err) => {
+                if (err) console.error('Error creating course_resources table:', err);
+                else console.log('✓ Course resources table created');
+            });
+
+            // Resource downloads tracking table
+            db.run(`
+                CREATE TABLE IF NOT EXISTS resource_downloads (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    resource_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    downloaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (resource_id) REFERENCES course_resources(id),
+                    FOREIGN KEY (user_id) REFERENCES registered_users(id)
+                )
+            `, (err) => {
+                if (err) console.error('Error creating resource_downloads table:', err);
+                else console.log('✓ Resource downloads table created');
                 resolve();
             });
         });

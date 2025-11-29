@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize profile data
     initializeProfile();
+    
+    // Setup secret key combination to show admin button (Ctrl+Shift+A)
+    setupAdminSecretKey();
 });
 
 // Check if admin is logged in
@@ -48,8 +51,44 @@ function checkAdminStatus() {
     if (isLoggedIn) {
         showAdminPanelButton();
     } else {
-        showAdminLoginButton();
+        // Don't show admin login button by default - use secret key
+        hideAdminButton();
     }
+}
+
+// Setup secret key combination to reveal admin button
+function setupAdminSecretKey() {
+    let keys = [];
+    
+    document.addEventListener('keydown', (e) => {
+        keys.push(e.key);
+        
+        // Keep only last 10 keys
+        if (keys.length > 10) {
+            keys.shift();
+        }
+        
+        // Check for Ctrl+Shift+A combination
+        if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+            e.preventDefault();
+            showAdminLoginButton();
+            console.log('Admin access enabled');
+        }
+        
+        // Alternative: Type "admin" to show button
+        if (keys.slice(-5).join('').toLowerCase() === 'admin') {
+            showAdminLoginButton();
+            console.log('Admin access enabled');
+            keys = []; // Clear keys
+        }
+    });
+}
+
+// Hide admin button
+function hideAdminButton() {
+    document.getElementById('admin-login-btn').style.display = 'none';
+    document.getElementById('admin-panel-btn').style.display = 'none';
+    document.body.classList.remove('admin-logged-in');
 }
 
 // Show admin login button
@@ -191,21 +230,56 @@ function closeLoginModal() {
 }
 
 // Handle login
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
     
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
+    const errorElement = document.getElementById('login-error');
     
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-        // Login successful
-        localStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
-        showAdminPanelButton();
-        closeLoginModal();
-        openAdminModal();
-    } else {
-        // Login failed
-        document.getElementById('login-error').textContent = t('error_login_invalid');
+    errorElement.textContent = '';
+    
+    try {
+        // Try server authentication first
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.token) {
+            // Server authentication successful
+            localStorage.setItem('auth_token', data.token);
+            localStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
+            showAdminPanelButton();
+            closeLoginModal();
+            openAdminModal();
+        } else {
+            // Server authentication failed, try local credentials as fallback
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                localStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
+                showAdminPanelButton();
+                closeLoginModal();
+                openAdminModal();
+            } else {
+                errorElement.textContent = t('error_login_invalid') || 'Invalid username or password';
+            }
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        // Fallback to local authentication if server is unavailable
+        if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+            localStorage.setItem(STORAGE_KEYS.isLoggedIn, 'true');
+            showAdminPanelButton();
+            closeLoginModal();
+            openAdminModal();
+        } else {
+            errorElement.textContent = t('error_login_invalid') || 'Invalid username or password';
+        }
     }
 }
 
@@ -213,7 +287,8 @@ function handleLogin(e) {
 function logoutAdmin() {
     if (confirm(t('confirm_logout'))) {
         localStorage.setItem(STORAGE_KEYS.isLoggedIn, 'false');
-        showAdminLoginButton();
+        localStorage.removeItem('auth_token'); // Clear JWT token
+        hideAdminButton(); // Hide admin button after logout
         closeAdminModal();
     }
 }
@@ -238,13 +313,47 @@ function openAdminModal() {
 // Close admin modal
 function closeAdminModal() {
     document.getElementById('admin-modal').classList.remove('show');
+    // Close settings dropdown if open
+    const settingsMenu = document.getElementById('admin-settings-menu');
+    if (settingsMenu) {
+        settingsMenu.classList.remove('show');
+    }
 }
+
+// Toggle admin settings dropdown
+function toggleAdminSettings() {
+    const settingsMenu = document.getElementById('admin-settings-menu');
+    const settingsToggle = document.getElementById('admin-settings-toggle');
+    
+    settingsMenu.classList.toggle('show');
+    settingsToggle.classList.toggle('active');
+}
+
+// Close settings dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    const settingsDropdown = document.querySelector('.admin-settings-dropdown');
+    const settingsMenu = document.getElementById('admin-settings-menu');
+    
+    if (settingsDropdown && settingsMenu && !settingsDropdown.contains(e.target)) {
+        settingsMenu.classList.remove('show');
+        document.getElementById('admin-settings-toggle')?.classList.remove('active');
+    }
+});
 
 // Switch admin tab
 function switchAdminTab(tab) {
+    // Close settings dropdown
+    const settingsMenu = document.getElementById('admin-settings-menu');
+    if (settingsMenu) {
+        settingsMenu.classList.remove('show');
+        document.getElementById('admin-settings-toggle')?.classList.remove('active');
+    }
+    
     // Update tab buttons
     document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
-    event.target.closest('.admin-tab').classList.add('active');
+    if (event.target.closest('.admin-tab')) {
+        event.target.closest('.admin-tab').classList.add('active');
+    }
     
     // Update sections
     document.querySelectorAll('.admin-section').forEach(section => section.classList.remove('active'));
@@ -269,6 +378,14 @@ function loadAdminData() {
     loadCoursesAdmin('bsc');
     loadCoursesAdmin('msc');
     loadProfileToForm();
+    
+    // Load resources data if functions exist
+    if (typeof loadResourcesAdmin === 'function') {
+        loadResourcesAdmin();
+    }
+    if (typeof loadRegisteredUsers === 'function') {
+        loadRegisteredUsers();
+    }
 }
 
 // ===================================

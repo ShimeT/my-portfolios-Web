@@ -73,6 +73,7 @@ function updatePageTranslations() {
     updateText('.nav-link[href="#home"]', 'nav_home');
     updateText('.nav-link[href="#about"]', 'nav_about');
     updateText('.nav-link[href="#experience"]', 'nav_experience');
+    updateText('.nav-link[href="#resources"]', 'admin_resources');
     updateText('.nav-link[href="#portfolio"]', 'nav_portfolio');
     updateText('.nav-link[href="#contact"]', 'nav_contact');
     
@@ -116,6 +117,10 @@ function updatePageTranslations() {
     // Experience Section
     updateText('#experience .section-title', 'experience_title');
     
+    // Resources Section
+    updateText('#resources .section-title', 'resources_title');
+    updateText('#resources .section-subtitle', 'resources_subtitle');
+    
     // Portfolio Section
     updateText('#portfolio .section-title', 'portfolio_title');
     updateText('#portfolio .section-subtitle', 'portfolio_subtitle');
@@ -144,6 +149,25 @@ function updatePageTranslations() {
         footerText.textContent = `© 2024 Shimelis Tesfaye. ${t('footer_rights')}`;
     }
     
+    // User Register Button
+    const registerBtn = document.getElementById('user-register-btn');
+    if (registerBtn) {
+        registerBtn.setAttribute('aria-label', t('btn_register'));
+        registerBtn.setAttribute('title', t('btn_register'));
+        const registerBtnText = registerBtn.querySelector('span');
+        if (registerBtnText) {
+            registerBtnText.textContent = t('btn_register');
+        }
+    }
+    
+    // Registration Modal
+    updateHTML('#registration-modal h3', `<i class="fas fa-user-plus"></i> ${t('register_to_download')}`);
+    updateText('#registration-modal .modal-subtitle', 'register_subtitle');
+    updatePlaceholder('#reg-name', 'full_name');
+    updatePlaceholder('#reg-email', 'email_address');
+    updatePlaceholder('#reg-password', 'password_min');
+    updateHTML('#registration-form .btn-primary', `<i class="fas fa-user-check"></i> ${t('register_download')}`);
+    
     // Admin Panel
     updateText('#login-modal h3', 'admin_login');
     updatePlaceholder('#login-username', 'admin_username');
@@ -159,7 +183,16 @@ function updatePageTranslations() {
     if (adminTabs[0]) adminTabs[0].innerHTML = `<i class="fas fa-folder"></i> ${t('admin_projects')}`;
     if (adminTabs[1]) adminTabs[1].innerHTML = `<i class="fas fa-briefcase"></i> ${t('admin_experience')}`;
     if (adminTabs[2]) adminTabs[2].innerHTML = `<i class="fas fa-graduation-cap"></i> ${t('admin_courses')}`;
-    if (adminTabs[3]) adminTabs[3].innerHTML = `<i class="fas fa-user"></i> ${t('admin_profile')}`;
+    if (adminTabs[3]) adminTabs[3].innerHTML = `<i class="fas fa-book"></i> ${t('admin_resources')}`;
+    if (adminTabs[4]) adminTabs[4].innerHTML = `<i class="fas fa-users"></i> ${t('admin_users')}`;
+    
+    // Settings dropdown
+    const settingsToggle = document.querySelector('.admin-settings-toggle span');
+    if (settingsToggle) settingsToggle.textContent = t('admin_settings');
+    
+    const settingsOptions = document.querySelectorAll('.admin-settings-option span');
+    if (settingsOptions[0]) settingsOptions[0].textContent = t('admin_profile');
+    if (settingsOptions[1]) settingsOptions[1].textContent = t('btn_logout');
     
     // Degree tabs
     const degreeTabs = document.querySelectorAll('.degree-tab');
@@ -200,6 +233,29 @@ function updatePageTranslations() {
     // Modal buttons
     updateText('#course-modal h3', 'btn_add_course');
     updatePlaceholder('#course-name', 'course_name_label');
+    
+    // Admin Resources Section
+    const resourceUploadTitle = document.querySelector('.resource-upload-container h5');
+    if (resourceUploadTitle) resourceUploadTitle.innerHTML = `<i class="fas fa-upload"></i> ${t('upload_resource')}`;
+    
+    const resourceLabels = document.querySelectorAll('#resource-upload-form label');
+    if (resourceLabels[0]) resourceLabels[0].textContent = t('resource_title');
+    if (resourceLabels[1]) resourceLabels[1].textContent = t('resource_description');
+    if (resourceLabels[2]) resourceLabels[2].textContent = t('resource_category');
+    if (resourceLabels[3]) resourceLabels[3].textContent = t('resource_file');
+    
+    const resourceUploadBtn = document.querySelector('#resource-upload-form .btn-primary');
+    if (resourceUploadBtn) resourceUploadBtn.innerHTML = `<i class="fas fa-upload"></i> ${t('upload')}`;
+    
+    // Admin section headers
+    const adminSectionHeaders = document.querySelectorAll('.admin-section-header h4');
+    adminSectionHeaders.forEach((header, index) => {
+        if (header.textContent.includes('Resources')) {
+            header.textContent = t('manage_resources');
+        } else if (header.textContent.includes('Users')) {
+            header.textContent = t('registered_users');
+        }
+    });
     
     // Update admin panel if it's loaded
     if (typeof loadAdminData === 'function') {
